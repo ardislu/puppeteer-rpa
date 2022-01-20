@@ -1,5 +1,3 @@
-import { join } from 'path';
-
 interface puppeteerRpaConfig {
   recordingsDir: string,
   recordingsToExecute: string[],
@@ -7,7 +5,7 @@ interface puppeteerRpaConfig {
 }
 
 const config: puppeteerRpaConfig = {
-  recordingsDir: join(__dirname, '../recordings'),
+  recordingsDir: "./recordings",
   recordingsToExecute: [],
   silent: false
 }

@@ -1,5 +1,3 @@
-/node_modules
-
 # .keep is only for git, to force the 'logs' folder to exist
 logs/*
 !logs/.keep

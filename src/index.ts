@@ -34,16 +34,16 @@ const logger = log.getLogger();
 
 // Compare actualRecordings with recordingsToExecute and only add valid recordings
 let recordings: string[] = [];
-const actualRecordings = Array.from(Deno.readDirSync(config.recordingsDir)).map(
-  (e) => e.name,
-);
+const actualRecordings = Array.from(Deno.readDirSync(config.recordingsDir)).map(e => e.name);
 if (config.recordingsToExecute.length === 0) { // Empty recordingsToExecute --> execute all recordings
   recordings = actualRecordings;
-} else {
+}
+else {
   for (const rec of config.recordingsToExecute) {
     if (actualRecordings.includes(rec)) {
       recordings.push(rec);
-    } else {
+    }
+    else {
       logger.warning(
         `No recording named "${rec}" in "${config.recordingsDir}".`,
       );

@@ -52,7 +52,7 @@ git clone https://github.com/ardislu/puppeteer-rpa.git
 
 1. Make a puppeteer recording by using Chrome DevTools' [Recording feature](https://developers.google.com/web/updates/2021/01/devtools#record) (available in Chrome 89+ only)
 2. Copy the recording into a standalone file in the `recordings` folder
-3. `deno run -A ./src/index.ts`
+3. `deno run -A ./main.ts`
 
 ## Flags
 - `dir`, `D`: the directory where the puppeteer recordings are located. Default value is `./recordings`.
@@ -61,12 +61,12 @@ git clone https://github.com/ardislu/puppeteer-rpa.git
 Examples:
 ```
 # Run example1.js and example2.js from the ./example-directory folder
-deno run -A ./src/index.ts --dir ./example-directory --exec example1.js,example2.js
+deno run -A ./main.ts --dir ./example-directory --exec example1.js,example2.js
 ```
 
 ```
 # Run example3.js from the ./recordings folder
-deno run -A ./src/index.ts -E example3.js
+deno run -A ./main.ts -E example3.js
 ```
 
 ## Notes

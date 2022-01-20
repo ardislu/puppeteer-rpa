@@ -1,7 +1,7 @@
 import { parse } from "https://deno.land/std@0.121.0/flags/mod.ts";
 import * as log from "https://deno.land/std@0.121.0/log/mod.ts";
 
-// Example: deno run -A ./src/index.ts --dir ./example-directory --exec example1.js,example2.js
+// Example: deno run -A ./main.ts --dir ./example-directory --exec example1.js,example2.js
 let { recordingsDir, recordingsToExecute } = parse(Deno.args, {
   alias: {
     'recordingsDir': ['dir', 'D'],

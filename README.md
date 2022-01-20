@@ -10,8 +10,8 @@ Simple orchestrator to execute and log puppeteer recordings for robotic process 
 Using `bash`:
 
 ```bash
-PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
-PUPPETEER_PRODUCT=firefox deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
+PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts # For chromium
+PUPPETEER_PRODUCT=firefox deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts # For firefox
 ```
 
 Using `PowerShell` ([reference](https://github.com/PowerShell/PowerShell/issues/3316)):

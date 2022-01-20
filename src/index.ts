@@ -1,8 +1,6 @@
 import * as log from "https://deno.land/std@0.121.0/log/mod.ts";
 import config from "./config.ts";
 
-// Date.now() returns a number (milliseconds since January 1, 1970) which is appropriate for a file name.
-// new Date() returns a Date object which contains inappropriate characters for a file name (colons, :) when casted to a string.
 const startTime = Date.now();
 
 await log.setup({

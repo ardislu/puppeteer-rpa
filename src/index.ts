@@ -3,23 +3,19 @@ import config from "./config.ts";
 
 const startTime = Date.now();
 
+const logFormatter = (r: log.LogRecord) => `${r.datetime.toISOString()} | ${r.levelName} | ${r.msg}`;
 await log.setup({
   handlers: {
-    console: new log.handlers.ConsoleHandler("DEBUG", {
-      formatter: (logRecord) =>
-        `${logRecord.datetime.toISOString()} | ${logRecord.levelName} | ${logRecord.msg}`,
-    }),
+    console: new log.handlers.ConsoleHandler("DEBUG", { formatter: logFormatter }),
 
     infoFile: new log.handlers.FileHandler("INFO", {
       filename: `./logs/${startTime}-INFO.log`,
-      formatter: (logRecord) =>
-        `${logRecord.datetime.toISOString()} | ${logRecord.levelName} | ${logRecord.msg}`,
+      formatter: logFormatter,
     }),
 
     errorFile: new log.handlers.FileHandler("ERROR", {
       filename: `./logs/${startTime}-ERROR.log`,
-      formatter: (logRecord) =>
-        `${logRecord.datetime.toISOString()} | ${logRecord.levelName} | ${logRecord.msg}`,
+      formatter: logFormatter,
     }),
   },
 

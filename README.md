@@ -54,9 +54,20 @@ git clone https://github.com/ardislu/puppeteer-rpa.git
 2. Copy the recording into a standalone file in the `recordings` folder
 3. `deno run -A ./src/index.ts`
 
-## config.ts
+## Flags
+- `dir`, `D`: the directory where the puppeteer recordings are located. Default value is `./recordings`.
+- `exec`, `E`: the recordings to execute. Default executes all recordings in `dir`.
 
-Modify the `config` object in `config.ts` to change default settings for the orchestrator.
+Examples:
+```
+# Run example1.js and example2.js from the ./example-directory folder
+deno run -A ./src/index.ts --dir ./example-directory --exec example1.js,example2.js
+```
+
+```
+# Run example3.js from the ./recordings folder
+deno run -A ./src/index.ts -E example3.js
+```
 
 ## Notes
 

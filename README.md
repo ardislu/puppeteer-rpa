@@ -14,11 +14,28 @@ PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.
 PUPPETEER_PRODUCT=firefox deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
 ```
 
-Using `PowerShell`:
+Using `PowerShell` ([reference](https://github.com/PowerShell/PowerShell/issues/3316)):
 
 ```PowerShell
-& { $PUPPETEER_PRODUCT='chrome'; deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts }
-& { $PUPPETEER_PRODUCT='firefox'; deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts }
+# For chromium
+try {
+  $oldValue = $env:PUPPETEER_PRODUCT
+  $env:PUPPETEER_PRODUCT = "chrome"
+  deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
+}
+finally {
+  $env:PUPPETEER_PRODUCT = $oldValue
+}
+
+# For firefox
+try {
+  $oldValue = $env:PUPPETEER_PRODUCT
+  $env:PUPPETEER_PRODUCT = "firefox"
+  deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
+}
+finally {
+  $env:PUPPETEER_PRODUCT = $oldValue
+}
 ```
 
 Reference [deno-puppeteer](https://github.com/lucacasonato/deno-puppeteer) for more details.

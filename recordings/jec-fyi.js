@@ -1,10 +1,7 @@
-import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+const puppeteer = require('puppeteer');
 
 (async () => {
-    const browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 10
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     await page.goto("https://jec.fyi/demo/recorder");

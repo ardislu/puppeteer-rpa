@@ -30,9 +30,9 @@ await log.setup({
 const logger = log.getLogger();
 
 /* Parse input flags and handle errors */
-const { dirArg, execArg, synchronous, headless, slowMo } = parse(Deno.args, {
+const { dirArg, execArg, synchronous, headless, slowMo, screenshot } = parse(Deno.args, {
   string: ['dirArg', 'execArg', 'slowMo'],
-  boolean: ['synchronous', 'headless'],
+  boolean: ['synchronous', 'headless', 'screenshot'],
   alias: {
     'dirArg': ['dir', 'D'],
     'execArg': ['exec', 'E'],
@@ -43,7 +43,8 @@ const { dirArg, execArg, synchronous, headless, slowMo } = parse(Deno.args, {
     'execArg': '*.js',
     'synchronous': false,
     'headless': false,
-    'slowMo': 0
+    'slowMo': 0,
+    'screenshot': false
   }
 });
 
@@ -79,7 +80,7 @@ for (const glob of execGlobs) {
   let atLeastOneFileResolved = false;
   for await (const file of expandGlob(`${recordingRootDirectory}/${glob}`)) {
     if (file.isFile) {
-      recordings.push(file.path);
+      recordings.push(file);
       atLeastOneFileResolved = true;
     }
     else {
@@ -106,11 +107,13 @@ const puppeteerSettings = {
   slowMo: parseInt(slowMo)
 };
 for (const rec of recordings) {
-  logger.info(`Opened ${rec}`);
+  logger.info(`Opened ${rec.name}`);
   // WARNING: these hardcoded string replacements will break if Chrome's recording generator changes
-  const scriptPromise = Deno.readTextFile(rec)
+  const scriptPromise = Deno.readTextFile(rec.path)
     .then(s => s.replace("const puppeteer = require('puppeteer');", importString)) // Replace CJS import with ESM import
-    .then(s => s.replace("const browser = await puppeteer.launch();", `const browser = await puppeteer.launch(${JSON.stringify(puppeteerSettings)});`)); // Inject puppeteer settings
+    .then(s => s.replace("const browser = await puppeteer.launch();", `const browser = await puppeteer.launch(${JSON.stringify(puppeteerSettings)});`)) // Inject puppeteer settings
+    // Will take the screenshot immediately before closing the browser - this is not optimal because if the form is already submitted then the form may already be cleared.
+    .then(s => screenshot ? s.replace("await browser.close();", `await page.screenshot({ path: '${startTime}-${rec.name}.png' });\nawait browser.close();`) : s) // Inject screenshot
   const tempFilePromise = Deno.makeTempFile();
   const [script, tempFile] = await Promise.all([scriptPromise, tempFilePromise]);
   await Deno.writeTextFile(tempFile, script);
@@ -119,8 +122,8 @@ for (const rec of recordings) {
     cmd: ["deno", "run", "-A", "--unstable", tempFile],
   });
   const status = proc.status()
-    .then(_ => logger.info(`Closed ${rec}.`))
-    .catch(e => logger.error(`Error occurred while executing "${rec}": ${e}`))
+    .then(_ => logger.info(`Closed ${rec.name}.`))
+    .catch(e => logger.error(`Error occurred while executing "${rec.name}": ${e}`))
     .finally(() => Deno.remove(tempFile));
   if (synchronous) {
     await status;

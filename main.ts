@@ -30,14 +30,18 @@ await log.setup({
 const logger = log.getLogger();
 
 /* Parse input flags and handle errors */
-const { dirArg, execArg } = parse(Deno.args, {
+const { dirArg, execArg, synchronous } = parse(Deno.args, {
+  string: ['dirArg', 'execArg'],
+  boolean: ['synchronous'],
   alias: {
     'dirArg': ['dir', 'D'],
-    'execArg': ['exec', 'E']
+    'execArg': ['exec', 'E'],
+    'synchronous': ['sync']
   },
   default: {
     'dirArg': './recordings',
-    'execArg': '*.js'
+    'execArg': '*.js',
+    'synchronous': false
   }
 });
 
@@ -111,8 +115,11 @@ for (const rec of recordings) {
   const proc = Deno.run({
     cmd: ["deno", "run", "-A", "--unstable", tempFile],
   });
-  proc.status()
+  const status = proc.status()
     .then(_ => logger.info(`Closed ${rec}.`))
     .catch(e => logger.error(`Error occurred while executing "${rec}": ${e}`))
     .finally(() => Deno.remove(tempFile));
+  if (synchronous) {
+    await status;
+  }
 }

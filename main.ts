@@ -97,6 +97,7 @@ if (recordings.length === 0) {
   Deno.exit(1);
 }
 
+/* Execute the recordings */
 const importString = 'import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";';
 const puppeteerSettings = {
   headless: false,

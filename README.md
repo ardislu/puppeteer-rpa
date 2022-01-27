@@ -55,22 +55,40 @@ git clone https://github.com/ardislu/puppeteer-rpa.git
 3. `deno run -A ./main.ts`
 
 ## Flags
+
 - `dir`, `D`: the directory where the puppeteer recordings are located. Default value is `./recordings`.
-- `exec`, `E`: the recordings to execute. Default executes all recordings in `dir`.
+- `exec`, `E`: the recordings to execute. Default value is `*.js`.
+- `sync`: boolean flag to run the recordings synchronously or in parallel. Default value is `false`.
+- `headless`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/v7.1.0/docs/api.md#puppeteerlaunchoptions). Boolean flag to run the browser in headless mode or not. Default value is `false`.
+- `slowMo`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/v7.1.0/docs/api.md#puppeteerlaunchoptions). Number of milliseconds to slow down operations by (useful to see the operations). Default value is `0`.
+- `screenshot`: boolean flag to take a screenshot at the end of the recording, before the browser is closed. Default value is `false`. 
 
 Examples:
+```
+# Run all the *.js files from the ./recordings folder in parallel
+deno run -A ./main.ts
+```
+
 ```
 # Run example1.js and example2.js from the ./example-directory folder
 deno run -A ./main.ts --dir ./example-directory --exec example1.js,example2.js
 ```
 
 ```
-# Run example3.js from the ./recordings folder
-deno run -A ./main.ts -E example3.js
+# Use a wildcard to match recordings with a specific name from the ./recordings folder
+deno run -A ./main.ts -E example*.js
+```
+
+```
+# Run all the recordings from the ./recordings folder one at a time (i.e. synchronously)
+deno run -A ./main.ts --sync
+```
+
+```
+# Run all the recordings from the ./recordings folder in headless mode and take screenshots
+deno run -A ./main.ts --headless --screenshot
 ```
 
 ## Notes
 
-- The orchestrator will run all recordings in parallel.
 - Example recordings are included for completing the forms on [jec.fyi](https://jec.fyi/demo/recorder) and [rpachallenge](http://www.rpachallenge.com/).
-- For simplicity, the orchestrator does not allow you to configure the puppeteer settings of individual scripts. If you need to set puppeteer launch settings (examples: `headless: false` or `slowMo: 10`), customize the individual recording scripts.

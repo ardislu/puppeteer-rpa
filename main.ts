@@ -93,12 +93,26 @@ if (recordings.length === 0) {
   Deno.exit(1);
 }
 
+const importString = 'import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";';
+const puppeteerSettings = {
+  headless: false,
+  slowMo: 10
+};
 for (const rec of recordings) {
   logger.info(`Opened ${rec}`);
+  // WARNING: these hardcoded string replacements will break if Chrome's recording generator changes
+  const scriptPromise = Deno.readTextFile(rec)
+    .then(s => s.replace("const puppeteer = require('puppeteer');", importString)) // Replace CJS import with ESM import
+    .then(s => s.replace("const browser = await puppeteer.launch();", `const browser = await puppeteer.launch(${JSON.stringify(puppeteerSettings)});`)); // Inject puppeteer settings
+  const tempFilePromise = Deno.makeTempFile();
+  const [script, tempFile] = await Promise.all([scriptPromise, tempFilePromise]);
+  await Deno.writeTextFile(tempFile, script);
+
   const proc = Deno.run({
-    cmd: ["deno", "run", "-A", "--unstable", rec],
+    cmd: ["deno", "run", "-A", "--unstable", tempFile],
   });
-  proc.status().then((status) =>
-    logger.info(`Closed ${rec} with code ${status.code}.`)
-  );
+  proc.status()
+    .then(_ => logger.info(`Closed ${rec}.`))
+    .catch(e => logger.error(`Error occurred while executing "${rec}": ${e}`))
+    .finally(() => Deno.remove(tempFile));
 }

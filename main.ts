@@ -30,9 +30,9 @@ await log.setup({
 const logger = log.getLogger();
 
 /* Parse input flags and handle errors */
-const { dirArg, execArg, synchronous } = parse(Deno.args, {
-  string: ['dirArg', 'execArg'],
-  boolean: ['synchronous'],
+const { dirArg, execArg, synchronous, headless, slowMo } = parse(Deno.args, {
+  string: ['dirArg', 'execArg', 'slowMo'],
+  boolean: ['synchronous', 'headless'],
   alias: {
     'dirArg': ['dir', 'D'],
     'execArg': ['exec', 'E'],
@@ -41,7 +41,9 @@ const { dirArg, execArg, synchronous } = parse(Deno.args, {
   default: {
     'dirArg': './recordings',
     'execArg': '*.js',
-    'synchronous': false
+    'synchronous': false,
+    'headless': false,
+    'slowMo': 0
   }
 });
 
@@ -100,8 +102,8 @@ if (recordings.length === 0) {
 /* Execute the recordings */
 const importString = 'import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";';
 const puppeteerSettings = {
-  headless: false,
-  slowMo: 10
+  headless: headless,
+  slowMo: parseInt(slowMo)
 };
 for (const rec of recordings) {
   logger.info(`Opened ${rec}`);

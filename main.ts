@@ -1,6 +1,6 @@
-import * as log from "https://deno.land/std@0.130.0/log/mod.ts";
-import { parse } from "https://deno.land/std@0.130.0/flags/mod.ts";
-import { expandGlob } from "https://deno.land/std@0.130.0/fs/mod.ts";
+import * as log from "https://deno.land/std@0.145.0/log/mod.ts";
+import { parse } from "https://deno.land/std@0.145.0/flags/mod.ts";
+import { expandGlob } from "https://deno.land/std@0.145.0/fs/mod.ts";
 
 /* Set up logger configurations and initialize the logger */
 const startTime = Date.now();
@@ -101,7 +101,7 @@ if (recordings.length === 0) {
 }
 
 /* Execute the recordings */
-const importString = 'import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";';
+const importString = 'import puppeteer from "https://deno.land/x/puppeteer@14.1.1/mod.ts";';
 const puppeteerSettings = {
   headless: headless,
   slowMo: parseInt(slowMo)

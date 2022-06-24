@@ -59,8 +59,8 @@ git clone https://github.com/ardislu/puppeteer-rpa.git
 - `dir`, `D`: the directory where the puppeteer recordings are located. Default value is `./recordings`.
 - `exec`, `E`: the recordings to execute. Default value is `*.js`.
 - `sync`: boolean flag to run the recordings synchronously or in parallel. Default value is `false`.
-- `headless`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/v7.1.0/docs/api.md#puppeteerlaunchoptions). Boolean flag to run the browser in headless mode or not. Default value is `false`.
-- `slowMo`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/v7.1.0/docs/api.md#puppeteerlaunchoptions). Number of milliseconds to slow down operations by (useful to see the operations). Default value is `0`.
+- `headless`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteerlaunchoptions). Boolean flag to run the browser in headless mode or not. Default value is `false`.
+- `slowMo`: same as the [Puppeteer launch option](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteerlaunchoptions). Number of milliseconds to slow down operations by (useful to see the operations). Default value is `0`.
 - `screenshot`: boolean flag to take a screenshot at the end of the recording, before the browser is closed. Default value is `false`. 
 
 Examples:

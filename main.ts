@@ -104,7 +104,7 @@ if (recordings.length === 0) {
 const importString = 'import puppeteer from "https://deno.land/x/puppeteer@14.1.1/mod.ts";';
 const puppeteerSettings = {
   headless: headless,
-  slowMo: parseInt(slowMo)
+  slowMo: parseInt(slowMo.toString())
 };
 for (const rec of recordings) {
   logger.info(`Opened ${rec.name}`);

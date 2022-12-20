@@ -10,8 +10,8 @@ Simple orchestrator to execute and log puppeteer recordings for robotic process 
 Using `bash`:
 
 ```bash
-PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@14.1.1/install.ts # For chromium
-PUPPETEER_PRODUCT=firefox deno run -A --unstable https://deno.land/x/puppeteer@14.1.1/install.ts # For firefox
+PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts # For chromium
+PUPPETEER_PRODUCT=firefox deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts # For firefox
 ```
 
 Using `PowerShell` ([reference](https://github.com/PowerShell/PowerShell/issues/3316)):
@@ -21,7 +21,7 @@ Using `PowerShell` ([reference](https://github.com/PowerShell/PowerShell/issues/
 try {
   $oldValue = $env:PUPPETEER_PRODUCT
   $env:PUPPETEER_PRODUCT = "chrome"
-  deno run -A --unstable https://deno.land/x/puppeteer@14.1.1/install.ts
+  deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts
 }
 finally {
   $env:PUPPETEER_PRODUCT = $oldValue
@@ -31,7 +31,7 @@ finally {
 try {
   $oldValue = $env:PUPPETEER_PRODUCT
   $env:PUPPETEER_PRODUCT = "firefox"
-  deno run -A --unstable https://deno.land/x/puppeteer@14.1.1/install.ts
+  deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts
 }
 finally {
   $env:PUPPETEER_PRODUCT = $oldValue

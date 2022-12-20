@@ -1,6 +1,6 @@
-import * as log from "https://deno.land/std@0.145.0/log/mod.ts";
-import { parse } from "https://deno.land/std@0.145.0/flags/mod.ts";
-import { expandGlob } from "https://deno.land/std@0.145.0/fs/mod.ts";
+import * as log from "https://deno.land/std@0.170.0/log/mod.ts";
+import { parse } from "https://deno.land/std@0.170.0/flags/mod.ts";
+import { expandGlob } from "https://deno.land/std@0.170.0/fs/mod.ts";
 
 /* Set up logger configurations and initialize the logger */
 const startTime = Date.now();
